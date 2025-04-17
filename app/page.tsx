@@ -172,10 +172,10 @@ export default function CoinGame() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between min-h-screen p-4 bg-gradient-to-b from-blue-100 to-purple-100">
+    <div className="flex flex-col items-center justify-between min-h-screen p-2 bg-gradient-to-b from-blue-100 to-purple-100">
       <div className="w-full max-w-xl">
         {/* Header with score and progress */}
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-2">
           <div className="w-[100%] bg-white rounded-full shadow-lg h-4 overflow-hidden">
             <motion.div 
               className="bg-gradient-to-r from-green-400 to-blue-500 h-full"
@@ -187,15 +187,13 @@ export default function CoinGame() {
         </div>
         
         {/* Header with target amount */}
-        <div className="mb-8 text-center">
-          <div className="p-6">
-            <p className="text-lg mb-2">Make this amount:</p>
+        <div className="mb-4 text-center">
+            <p className="text-lg mb-2 text-gray-600">Make this amount:</p>
             <p className="text-6xl font-bold text-green-600">{formatMoney(targetAmount)}</p>
-          </div>
         </div>
 
         {/* Coin pool */}
-        <div className="bg-blue-200 rounded-lg p-4 min-h-[200px] mb-8 flex flex-wrap justify-center items-center gap-2 border-4 border-blue-400">
+        <div className="bg-blue-200 rounded-lg p-4 min-h-[200px] mb-4 flex flex-wrap justify-center items-center gap-2 border-4 border-blue-400">
           {selectedCoins.length === 0 ? (
             <p className="text-gray-600 italic">Click on coins below to add them here</p>
           ) : (
@@ -208,14 +206,14 @@ export default function CoinGame() {
                 className="cursor-pointer"
                 onClick={() => removeCoin(coin.id)}
               >
-                <CoinImage type={coin.type} />
+                <CoinImage type={coin.type} sizeMultiplier={0.6} />
               </motion.div>
             ))
           )}
         </div>
 
         {/* Game status and controls */}
-        <div className="mb-8 text-center">
+        <div className="mb-4 text-center">
           {/* <p className="text-xl mb-2">
             Current total: <span className="font-bold text-blue-700">{formatMoney(totalValue)}</span>
           </p> */}
@@ -238,7 +236,7 @@ export default function CoinGame() {
           )}
 
           {gameState === "incorrect" && (
-            <div className="bg-red-100 p-4 rounded-lg border-2 border-red-500 mb-4">
+            <div className="bg-red-100 p-4 rounded-lg border-2 border-red-500">
               <p className="text-red-700 text-xl font-bold">Wrong! You needed {formatMoney(Math.abs(targetAmount - totalValue))} {targetAmount > totalValue ? "more" : "less"}.</p>
             </div>
           )}
@@ -265,7 +263,7 @@ export default function CoinGame() {
                 className="flex flex-col items-center cursor-pointer hover:scale-110 transition-transform"
                 onClick={() => addCoin(coin)}
               >
-                <CoinImage type={coin} />
+                <CoinImage type={coin} sizeMultiplier={0.6} />
                 <p className="mt-2 text-sm font-medium">{coin.name}</p>
                 <p className="text-xs text-gray-600">{coin.value}¢</p>
               </div>
@@ -278,10 +276,10 @@ export default function CoinGame() {
 }
 
 // Component to render coin images
-function CoinImage({ type }: { type: (typeof COINS)[number]; }) {
+function CoinImage({ type, sizeMultiplier = 1 }: { type: (typeof COINS)[number]; sizeMultiplier?: number }) {
   return (
-    <div className="flex items-center justify-center size-[110px]">
-      <img src={type.image} alt={type.name} width={type.size} height={type.size} className="rounded-full transition-transform hover:scale-105" />
+    <div className={`flex items-center justify-center size-[60px]`}>
+      <img src={type.image} alt={type.name} width={type.size * sizeMultiplier} height={type.size * sizeMultiplier} className="rounded-full transition-transform hover:scale-105" />
     </div>
   )
 }
