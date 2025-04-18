@@ -7,14 +7,14 @@ import confetti from 'canvas-confetti'
 
 // Coin values in cents
 const COINS = [
-  { name: "penny", value: 1, size: 90, image: "/penny-front.svg" },
-  { name: "nickel", value: 5, size: 100, image: "/nickel-front.svg" },
-  { name: "dime", value: 10, size: 80, image: "/dime-front.svg" },
-  { name: "quarter", value: 25, size: 110, image: "/quarter-front.svg" },
+  { name: "penny", value: 1, size: 90, max: 4, image: "/penny-front.svg" },
+  { name: "nickel", value: 5, size: 100, max: 1, image: "/nickel-front.svg" },
+  { name: "dime", value: 10, size: 80, max: 2, image: "/dime-front.svg" },
+  { name: "quarter", value: 25, size: 110, max: 3, image: "/quarter-front.svg" },
 ]
 
 // Number of correct answers needed to fill progress bar
-const MAX_PROGRESS = 5
+const MAX_PROGRESS = 10
 
 export default function CoinGame() {
   // Target amount in cents (1-100)
@@ -50,8 +50,13 @@ export default function CoinGame() {
   useEffect(() => {
     if (gameState === "correct" || gameState === "incorrect") {
       const timer = setTimeout(() => {
-        resetGame()
-      }, 5000)
+        if (gameState === "correct") {
+          resetGame()
+        } else {
+          setSelectedCoins([]);
+          setGameState("playing");
+        }
+      }, 3000)
       return () => clearTimeout(timer)
     }
   }, [gameState])
@@ -100,36 +105,15 @@ export default function CoinGame() {
   // Add a coin to the pool
   const addCoin = (coinType: (typeof COINS)[number]) => {
     if (gameState === "playing") {
-      // Check if adding a penny would exceed the limit
-      if (coinType.name === "penny") {
-        const pennyCount = selectedCoins.filter(coin => coin.type.name === "penny").length
-        
-        if (pennyCount >= 4) {
-          setErrorMessage("You already have 4 pennies! Use a nickel instead.")
-          // Hide the error message after 3 seconds
-          setTimeout(() => setErrorMessage(null), 3000)
-          return
-        }
+      const coinCount = selectedCoins.filter(coin => coin.type.name === coinType.name).length;
+
+      if (coinCount >= coinType.max) {
+        setErrorMessage(`Try something else!`);
+        // Hide the error message after 3 seconds
+        setTimeout(() => setErrorMessage(null), 3000)
+        return
       }
-      if (coinType.name === "nickel") {
-        const nickelCount = selectedCoins.filter(coin => coin.type.name === "nickel").length
-        if (nickelCount >= 1) {
-          setErrorMessage("You already have a nickel! Use a different coin instead.")
-          // Hide the error message after 3 seconds
-          setTimeout(() => setErrorMessage(null), 3000)
-          return
-        }
-      }
-      if (coinType.name === "dime") {
-        const dimeCount = selectedCoins.filter(coin => coin.type.name === "dime").length
-        if (dimeCount >= 4) {
-          setErrorMessage("You already have 4 dimes! Use quarters instead.")
-          // Hide the error message after 3 seconds
-          setTimeout(() => setErrorMessage(null), 3000)
-          return
-        }
-      }
-      
+
       // Clear any existing error when adding a valid coin
       setErrorMessage(null)
       setSelectedCoins([...selectedCoins, { id: idCounter, type: coinType }])
@@ -152,7 +136,6 @@ export default function CoinGame() {
   const checkAnswer = () => {
     if (totalValue === targetAmount) {
       setGameState("correct")
-      setScore(score + 100)
       setProgress(progress + 1)
     } else {
       setGameState("incorrect")
@@ -237,7 +220,7 @@ export default function CoinGame() {
 
           {gameState === "incorrect" && (
             <div className="bg-red-100 p-4 rounded-lg border-2 border-red-500">
-              <p className="text-red-700 text-xl font-bold">Wrong! You needed {formatMoney(Math.abs(targetAmount - totalValue))} {targetAmount > totalValue ? "more" : "less"}.</p>
+              <p className="text-red-700 text-xl font-bold">Wrong! You have {formatMoney(totalValue)}, try again.</p>
             </div>
           )}
 
