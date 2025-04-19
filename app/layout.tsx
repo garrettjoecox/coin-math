@@ -30,8 +30,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="overflow-hidden">
-        <div className="min-h-screen max-h-screen overflow-scroll bg-gradient-to-b from-blue-100 to-purple-100">
+      <body className="min-h-lvh bg-gradient-to-b from-blue-100 to-purple-100">
+        <div className="min-h-svh safe-area flex flex-col max-w-5xl mx-auto">
           {children}
         </div>
       </body>

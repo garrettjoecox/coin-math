@@ -14,8 +14,7 @@ body {
   overflow-y: scroll;
 }
 .safe-area {
-  min-height: calc(100vh - env(safe-area-inset-top));
-  margin-top: env(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
 }
 
 @layer utilities {

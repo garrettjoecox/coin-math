@@ -157,7 +157,7 @@ export default function CoinGame() {
     }
 
     return (
-        <div className="max-w-5xl safe-area min-h-screen mx-auto flex flex-col gap-4 p-4 relative">
+        <div className="flex-1 flex flex-col gap-4 p-4 relative">
             {/* Error message */}
             {errorMessage && (
                 <motion.div

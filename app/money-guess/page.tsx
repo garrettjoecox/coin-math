@@ -193,7 +193,7 @@ export default function MoneyGuessGame() {
     }
 
     return (
-        <div className="max-w-5xl safe-area min-h-screen mx-auto flex flex-col gap-4 p-4 relative">
+        <div className="flex-1 flex flex-col gap-4 p-4 relative">
             {/* Feedback message */}
             {feedbackMessage && (
                 <motion.div
@@ -227,7 +227,7 @@ export default function MoneyGuessGame() {
             </div>
 
             {/* Coin display area */}
-            <div className="flex-1 bg-blue-100 rounded-lg p-6 border-4 border-blue-300 min-h-[200px] flex items-center justify-center">
+            <div className="flex-1 bg-blue-100 rounded-lg p-4 border-4 border-blue-300 min-h-[200px] flex items-center justify-center">
                 <div className="flex flex-wrap justify-center items-center gap-2">
                     {displayedCoins.map((coin) => (
                         <motion.div
@@ -236,7 +236,7 @@ export default function MoneyGuessGame() {
                             animate={{ scale: 1 }}
                             className="coin-display"
                         >
-                            <CoinImage type={coin.type} sizeMultiplier={1} />
+                            <CoinImage type={coin.type} sizeMultiplier={0.8} />
                         </motion.div>
                     ))}
                 </div>
