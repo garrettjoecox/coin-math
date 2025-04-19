@@ -10,7 +10,7 @@ const COINS = [
     { name: "penny", value: 1, size: 90, max: 4, image: "/penny-front.svg" },
     { name: "nickel", value: 5, size: 100, max: 1, image: "/nickel-front.svg" },
     { name: "dime", value: 10, size: 80, max: 2, image: "/dime-front.svg" },
-    { name: "quarter", value: 25, size: 110, max: 3, image: "/quarter-front.svg" },
+    { name: "quarter", value: 25, size: 110, max: 8, image: "/quarter-front.svg" },
 ]
 
 // Number of correct answers needed to fill progress bar
@@ -33,7 +33,7 @@ export default function CoinGame() {
     // Initialize or reset the game
     const resetGame = () => {
         // Random amount between 1 and 100 cents
-        const newAmount = Math.floor(Math.random() * 100) + 1
+        const newAmount = Math.floor(Math.random() * 150) + 1
         setTargetAmount(newAmount)
         setSelectedCoins([])
         setGameState("playing")
