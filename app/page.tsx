@@ -15,6 +15,11 @@ export default function CoinGame() {
           Money Guess
         </div>
       </Link>
+      <Link href={"/clock-guess"}>
+        <div className="size-32 bg-gradient-to-r from-green-400 to-blue-500 text-white font-bold text-center flex items-center justify-center rounded-xl shadow-md hover:shadow-lg p-4">
+          Clock Guess
+        </div>
+      </Link>
     </div>
   )
 }
